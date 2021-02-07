@@ -1,0 +1,122 @@
+import json
+from version import Version
+try:
+    import requests
+except  ImportError as e:
+    print(e)
+    
+class  MercadoPago:
+    
+    def __init__(self, access_token):
+        self.access_token = access_token
+        self.bearer = "Bearer "+ self.access_token
+        print(Version.get_version())  
+    
+    def generate_preference(self, items):
+        preference_data = {
+            "headers" : {
+                        "Content-Type": "application/json",
+                        "Authorization": ""
+                        },
+            "data":{
+                "items": [],
+                    }            
+        }
+        
+        try:
+            preference_data["data"]["auto_return"] = self.auto_return
+            preference_data["data"]["back_urls"] = {
+                "failure":self.failure_url,
+                "pending":self.pending_url,
+                "success":self.success_url
+                }
+        except:
+            preference_data["data"]["auto_return"] = ""
+            preference_data["data"]["back_urls"] = {
+                "failure":"",
+                "pending":"",
+                "success":""
+            }    
+            
+        preference_data["headers"]["Authorization"] = "Bearer "+self.access_token
+        if isinstance(items, list):
+            preference_data["data"]["items"] = items
+        else:
+            preference_data["data"]["items"].append(items)
+        # print(preference_data)
+        return preference_data
+    
+    
+    def create_item(self, title, description, quantity,currency_id, unit_price):
+        item = {"title": title, 
+                "description": description,
+                "quantity": quantity ,
+                "currency_id":currency_id,
+                "unit_price": unit_price,
+                "picture_url": "https://www.mercadopago.com/org-img/MP3/home/logomp3.gif",
+                }
+        return item
+    
+    def create_preference(self,  items):
+        self.base_url = "https://api.mercadopago.com"
+        self.preference_data = self.generate_preference(items)
+        url = self.base_url+"/checkout/preferences"
+        response = requests.post(url,data=json.dumps(self.preference_data["data"]), headers=self.preference_data["headers"])
+        response_json = json.loads(response.text)
+        return response_json
+    
+    def set_back_urls(self, success = None, failure = None, pending = None , auto_return = "approved"):
+        try:
+            self.success_url = success
+            self.failure_url = failure
+            self.pending_url = pending
+            self.auto_return = auto_return
+            return True
+        except:
+            return False
+        
+    def create_payer(self):
+        pass
+        
+    
+access_token = 'TEST-6623451607855904-111502-83c610c2165674e9bba665cfb4aa6b0c-672708410'       
+mp = MercadoPago(access_token)
+items = [
+            {
+                "title": "Remera de mujer",
+                "description": "Remera modelo clasico manga corta",
+                "quantity": 3,
+                "currency_id": "ARS",
+                "unit_price": 10.0
+            },
+            {
+                "title": "Remera de Hombre",
+                "description": "Remera modelo clasico manga corta",
+                "quantity": 2,
+                "currency_id": "ARS",
+                "unit_price": 120
+            }
+        ]
+
+item1 = mp.create_item("remera de mujer"," Remera manga corta de mjer", 3, "ARS", 500)
+item2 = mp.create_item("remera de hombre"," Remera manga corta de hombre", 1, "ARS", 280)
+
+mp.set_back_urls("https://some.com/success", "http://some.com/failure", "https://some.com/pending")
+
+# item = {
+#                 "title": "Remera de mujer",
+#                 "description": "Remera modelo clasico manga corta",
+#                 "quantity": 3,
+#                 "currency_id": "ARS",
+#                 "unit_price": 10.0
+#             }
+
+preference = mp.create_preference([item1,item2])
+
+
+
+print(preference['init_point'])
+try:
+    print(preference['id'])
+except:
+    print()
