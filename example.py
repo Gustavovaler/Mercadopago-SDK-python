@@ -1,6 +1,6 @@
 from mercadopago import MercadoPago
 
-access_token = 'ACCESS TOKEN'       
+access_token = 'PROD_ACCESS_TOKEN'       
 mp = MercadoPago(access_token)
 items = [
             {
@@ -32,13 +32,29 @@ mp.set_back_urls("https://some.com/success", "http://some.com/failure", "https:/
 #                 "unit_price": 10.0
 #             }
 
+payer = {
+        "name": "Juan",
+        "surname": "Lopez",
+        "email": "user@email.com",
+        "phone": {
+            "area_code": "11",
+            "number": "4444-4444"
+        },
+        "identification": {
+            "type": "DNI",
+            "number": "12345678"
+        },
+        "address": {
+            "street_name": "Street",
+            "street_number": 123,
+            "zip_code": "5700"
+            }
+        }
+    
+mp.create_payer(payer )
+
 preference = mp.create_preference([item1,item2])
 
 
-print(preference)
 print(preference['init_point'])
-try:
-    print(preference['id'])
-except:
-    print()
 

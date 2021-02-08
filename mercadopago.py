@@ -36,14 +36,19 @@ class  MercadoPago:
                 "failure":"",
                 "pending":"",
                 "success":""
-            }    
+            }   
+        try:
+            preference_data["data"]["payer"] = self.payer
+            print("agregado al data")
+        except:
+             preference_data["data"]["payer"] = {}
             
         preference_data["headers"]["Authorization"] = "Bearer "+self.access_token
         if isinstance(items, list):
             preference_data["data"]["items"] = items
         else:
             preference_data["data"]["items"].append(items)
-        # print(preference_data)
+        
         return preference_data
     
     
@@ -75,7 +80,12 @@ class  MercadoPago:
         except:
             return False
         
-    def create_payer(self):
-        pass
+    def create_payer(self, payer):
+        try:
+            self.payer = payer
+            return True
+        except:
+            return False
+        
         
     
