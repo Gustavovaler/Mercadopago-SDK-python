@@ -6,6 +6,8 @@ $ pip install requests
 
 ```python
 
+from mercadopago import Mercadopago
+
 # Mercadopago instance
 mp = Mercadopago()
     
