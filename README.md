@@ -6,7 +6,6 @@ $ pip install requests
 
 
 # Mercadopago instance
-`
+
 mp = Mercadopago()
 
-`
