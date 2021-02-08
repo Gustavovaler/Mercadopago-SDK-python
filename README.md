@@ -6,7 +6,7 @@ $ pip install requests
 
 
 # Mercadopago instance
-
+```python
     mp = Mercadopago()
     
     mp.create_item("title", "description", int(quantity), "currency", float(unit_price))
@@ -26,3 +26,4 @@ $ pip install requests
 	
 	mp.create_item([item1, item2, ...])
 	
+```    
