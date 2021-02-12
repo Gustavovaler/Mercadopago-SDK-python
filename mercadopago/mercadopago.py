@@ -10,7 +10,7 @@ class  MercadoPago:
     def __init__(self, access_token):
         self.access_token = access_token
         self.bearer = "Bearer "+ self.access_token
-        print(Version.get_version())  
+        self.version = Version.get_version()
     
     def generate_preference(self, items):
         preference_data = {
@@ -39,7 +39,7 @@ class  MercadoPago:
             }   
         try:
             preference_data["data"]["payer"] = self.payer
-            print("agregado al data")
+
         except:
              preference_data["data"]["payer"] = {}
             
