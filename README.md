@@ -1,6 +1,6 @@
 # Pyhton Mercadopago SDK 
 
-[![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)]
+![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)
 
 ## Needs requests library 
 
