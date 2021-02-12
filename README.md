@@ -1,3 +1,7 @@
+# Pyhton Mercadopago SDK 
+
+[![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)]
+
 ## Needs requests library 
 
 $ pip install requests
@@ -30,6 +34,10 @@ mp.create_item(item)
 #also you can create items by list format
 	
 mp.create_item([item1, item2, ...])
+
+# [optional] you can also set back urls to send to your customer after payment
+
+mp.set_back_urls('https://my-site.com/success','https://my-site.com/failure','https://my-site.com/pending')
 
 # create and send the preference
 
