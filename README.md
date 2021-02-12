@@ -9,8 +9,11 @@ $ pip install requests
 from mercadopago import Mercadopago
 
 # Mercadopago instance
-mp = Mercadopago()
-    
+# you need a mercadopago account and obtain your mercadopago production access token
+# you can get yours at  https://mercadopago.com.ar/developers/panel/credentials (you must be logged in)
+mp = Mercadopago('YOUR MERCADOPAGO ACCESS TOKEN')
+
+# create an item to sell 
 mp.create_item("title", "description", int(quantity), "currency", float(unit_price))
 #you can make all items you want
 #or create a dict format item
