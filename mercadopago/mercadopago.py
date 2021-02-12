@@ -1,16 +1,19 @@
+# -*- coding: utf-8 -*-
+
 import json
 from version import Version
 try:
     import requests
 except  ImportError as e:
-    print(e)
+    print(f'FATAL ERROR : Se necesita la libreria requests  -> Error: {e}')
+    
     
 class  MercadoPago:
     
     def __init__(self, access_token):
         self.access_token = access_token
         self.bearer = "Bearer "+ self.access_token
-        self.version = Version.get_version()
+        self.version = Version.get_version()       
     
     def generate_preference(self, items):
         preference_data = {
